@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Medical Health Care </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+      <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+
+    <style>
+        .logo {
+            width: 50px;
+            height: 50px;
+            color: black;
+            margin-top: 0;
+            margin-left: 2px;
+        }
+
+        .myimg {
+            width: 50px;
+            height: 50px;
+            border: 2px solid black;
+            border-radius: 25px;
+        }
+
+        /* Input styling for the now editable field */
+        input[type="text"] {
+            background-color: #111;
+            border: 1px solid #ff1a1a;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        input[type="text"]::placeholder {
+            color: #bbbbbb;
+        }
+
+        input[type="text"]:focus {
+            background-color: #000;
+            border-color: #ff3333;
+            color: #ffffff;
+            box-shadow: 0 0 10px #ff1a1a;
+        }
+
+        /* Style for the modal checkboxes */
+        #symptomCheckboxes {
+            columns: 2; /* Two columns for checkboxes for better display */
+            column-gap: 20px;
+        }
+        .form-check {
+            margin-bottom: 5px;
+            break-inside: avoid;
+        }
+
+        /* FIX for Modal Text Visibility */
+        .modal-body .form-check-label {
+            color: #000000 !important;
+        }
+
+        .modal-body .form-check-label span {
+            color: #555555 !important;
+        }
+
+        .modal-body p {
+            color: #000000 !important;
+        }
+
+        /* Doctor Suggestion Button Style */
+        .doctor-btn {
+            background: #2596be !important; /* Blue color */
+            color: white !important;
+        }
+
+        /* Large Mic Icon Style for Voice Input */
+        .large-mic {
+            font-size: 8rem; /* Very large icon */
+            color: #ff1a1a; /* Red color for recording */
+            animation: pulse 1s infinite alternate; /* Simple pulsing effect */
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="logo">
+            <img class="myimg" src="{{ url_for('static', filename='img.png') }}" alt="">
+        </div>
+
+        <a class="navbar-brand" href="{{ url_for('home') }}">Medical Health Care</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/developer">Developer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/blog">Blog</a>
+                </li>
+            </ul>
+
+            <div class="d-flex">
+                {% if current_user.is_authenticated %}
+                    <span class="navbar-text me-3 text-white">
+                        👋 स्वागत है, **{{ current_user.username }}**!
+                    </span>
+                    <a class="btn btn-outline-danger" href="{{ url_for('logout') }}">
+                        <i class="bi bi-box-arrow-right"></i> लॉगआउट
+                    </a>
+                {% else %}
+                    <a class="btn btn-outline-light me-2" href="{{ url_for('login') }}">
+                        🔑 लॉगिन
+                    </a>
+                    <a class="btn btn-outline-warning" href="{{ url_for('signup') }}">
+                        ➕ साइन अप
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!--    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">-->
+<!--        <div class="container-fluid">-->
+<!--            <div class="logo">-->
+<!--                <img class="myimg" src="{{ url_for('static', filename='img.png') }}" alt="">-->
+<!--            </div>-->
+
+<!--            <a class="navbar-brand" href="#">Medical Health Care</a>-->
+<!--            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--                <span class="navbar-toggler-icon"></span>-->
+<!--            </button>-->
+<!--            <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+<!--                <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active" aria-current="page" href="#">Home</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="/about">About</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="/contact">Contact</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="/developer">Developer</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="/blog">Blog</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--                <form class="d-flex" role="search">-->
+<!--                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+<!--                    <button class="btn btn-outline-success" type="submit">Search</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </nav>-->
+
+<h1 class="mt-4 my-4 text-center text-green">Medical Health Care</h1>
+<div class="container my-4 mt-4" style="background: black; color: white; border-radius: 15px; padding: 40px;">
+    <form action="/predict" method="post">
+        <div class="form-group">
+            <div class="row mb-3">
+    <div class="col-md-12 text-center">
+        <a href="/" class="btn btn-warning btn-lg">
+            🆕 नए लक्षणों के लिए पेज साफ़ करें (Refresh The Page...)
+        </a>
+    </div>
+</div>
+            <label for="symptoms">लक्षण चुनें (Select Symptoms):</label>
+            <input type="text" class="form-control" id="symptoms" name="symptoms"
+                   placeholder="लक्षण मैन्युअल रूप से टाइप करें, या नीचे दी गई सूची से चुनें। (Type symptoms manually, or select from the list below.)"
+                   style="color: #ffffff;">
+
+            <button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#symptomSelectModal">
+                लक्षणों की सूची खोलें (Open Symptom List)
+            </button>
+
+        </div>
+        <br>
+        <button type="button" id="startSpeechRecognition" class="btn btn-primary" style="margin-left:3px;border:1px solid white; border-radius:20px;">
+            <i class="bi bi-mic-fill"></i> Voice Input (हिंदी में बोलें)
+        </button>
+        <br>
+
+        <div name="mysysms" id="transcription" class="mt-2 text-warning" style="font-style: italic;"></div>
+
+        {% if message %}
+        <p>{{ message }}</p>
+        {% endif %}
+        <br>
+
+        <button type="submit" class="btn btn-danger btn-lg" style="width: 100%; padding: 14px; margin-bottom: 5px;">Predict-Disease“बीमारी जानें”</button>
+    </form>
+</div>
+
+
+{% if predicted_disease %}
+<h1 class="text-center my-4 mt-4">Our AI System Results</h1>
+<div class="container">
+    <div class="result-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#diseaseModal" style="padding:4px; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#F39334;color:black;">Disease</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#descriptionModal" style="padding:4px; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#268AF3 ;color:black;">Description</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#precautionModal" style="padding:4px; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#F371F9 ;color:black;">Precaution</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#medicationsModal" style="padding:4px; font-size:20px;font-weight:bold; width:140px;border-radius:5px; background:#F8576F ;color:black;">Medications</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#workoutsModal" style="padding:4px; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#99F741 ;color:black;">Workouts</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#dietsModal" style="padding:4px; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#E5E23D;color:black;">Diets</button>
+
+        <button class="toggle-button doctor-btn" data-bs-toggle="modal" data-bs-target="#doctorsModal" style="padding:4px; font-size:20px;font-weight:bold; width:220px; border-radius:5px;">
+            Doctor's Suggestion
+        </button>
+    </div>
+</div>
+{% endif %}
+
+
+<div class="modal fade" id="symptomSelectModal" tabindex="-1" aria-labelledby="symptomSelectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #020606; color:white;">
+                <h5 class="modal-title" id="symptomSelectModalLabel">कृपया अपने लक्षण चुनें (Choose Your Symptoms)</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="symptomCheckboxes">
+                <p>लक्षणों को लोड किया जा रहा है...</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">बंद करें</button>
+                <button type="button" class="btn btn-primary" id="submitSymptoms" data-bs-dismiss="modal">सिम्प्टम भरें और बंद करें</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="micModal" tabindex="-1" aria-labelledby="micModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white text-center">
+                <h5 class="modal-title w-100" id="micModalLabel">🗣️ बोलें (Speak Now)</h5>
+            </div>
+            <div class="modal-body text-center">
+                <i class="bi bi-mic-fill large-mic"></i>
+                <p class="mt-3 text-muted">कृपया अपने लक्षण हिंदी में बताएं...</p>
+                <h4 id="liveTranscription" class="mt-3 text-primary"></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="stopRecognitionManually()">
+                    रिकॉर्डिंग बंद करें (Stop Recording)
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="diseaseModal" tabindex="-1" aria-labelledby="diseaseModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #020606; color:white;">
+                <h5 class="modal-title" id="diseaseModalLabel">Predicted Disease</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>{{ predicted_disease }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="doctorsModal" tabindex="-1" aria-labelledby="doctorsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="doctorsModalLabel">👨‍⚕️ Doctor's Suggestion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4 id="suggestedExpert"></h4>
+                <p id="suggestionDetails"></p>
+                <p class="text-muted"><small>यह एक AI-आधारित सुझाव है। कृपया सटीक निदान और उपचार के लिए हमेशा विशेषज्ञ डॉक्टर से परामर्श लें। (This is an AI-based suggestion. Always consult an expert doctor for accurate diagnosis and treatment.)</small></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #020606; color:white;">
+                    <h5 class="modal-title" id="descriptionModalLabel">Description</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ dis_des }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="modal fade" id="precautionModal" tabindex="-1" aria-labelledby="precautionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #020606; color:white;">
+                    <h5 class="modal-title" id="precautionModalLabel">Precaution</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in my_precautions %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="medicationsModal" tabindex="-1" aria-labelledby="medicationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #020606; color:white;">
+                    <h5 class="modal-title" id="medicationsModalLabel">Medications</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in medications %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="workoutsModal" tabindex="-1" aria-labelledby="workoutsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" >
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #020606; color:white;">
+                    <h5 class="modal-title" id="workoutsModalLabel">Workouts</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in workout %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="dietsModal" tabindex="-1" aria-labelledby="dietsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #020606; color:white;">
+                    <h5 class="modal-title" id="dietsModalLabel">Diets</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in my_diet %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+
+    <script>
+        // Global variable for recognition instance
+        let recognition = null;
+
+        // =================================================================
+        // Symptoms Selection & Mapping Data (Comprehensive Hindi/English Map)
+        // =================================================================
+
+        const symptomMap = {
+            'itching': 'खुजली', 'skin_rash': 'त्वचा पर दाने', 'nodal_skin_eruptions': 'त्वचा की गांठदार उद्भेदन',
+            'continuous_sneezing': 'लगातार छींकना', 'shivering': 'कंपकंपी', 'chills': 'ठंड लगना',
+            'joint_pain': 'जोड़ों का दर्द', 'stomach_pain': 'पेट दर्द', 'acidity': 'एसिडिटी',
+            'ulcers_on_tongue': 'जीभ पर छाले', 'muscle_wasting': 'मांसपेशियों का क्षय', 'vomiting': 'उल्टी',
+            'burning_micturition': 'पेशाब में जलन', 'spotting_ urination': 'पेशाब में धब्बे', 'fatigue': 'थकान',
+            'weight_gain': 'वजन बढ़ना', 'anxiety': 'चिंता', 'cold_hands_and_feets': 'हाथ-पैर ठंडे',
+            'mood_swings': 'मूड बदलना', 'weight_loss': 'वजन घटना', 'restlessness': 'बेचैनी',
+            'lethargy': 'सुस्ती', 'patches_in_throat': 'गले में धब्बे', 'irregular_sugar_level': 'अनियमित शुगर स्तर',
+            'cough': 'खांसी', 'high_fever': 'तेज बुखार', 'sunken_eyes': 'धँसी हुई आँखें',
+            'breathlessness': 'सांस फूलना', 'sweating': 'पसीना आना', 'dehydration': 'निर्जलीकरण',
+            'indigestion': 'अपच', 'headache': 'सरदर्द', 'yellowish_skin': 'पीली त्वचा',
+            'dark_urine': 'गहरा पेशाब', 'nausea': 'जी मिचलाना', 'loss_of_appetite': 'भूख न लगना',
+            'pain_behind_the_eyes': 'आँखों के पीछे दर्द', 'back_pain': 'कमर दर्द', 'constipation': 'कब्ज',
+            'abdominal_pain': 'पेट में दर्द', 'diarrhoea': 'दस्त', 'mild_fever': 'हल्का बुखार',
+            'yellow_urine': 'पीला पेशाब', 'yellowing_of_eyes': 'आँखों का पीला होना',
+            'acute_liver_failure': 'तीव्र लीवर विफलता', 'fluid_overload': 'द्रव अतिभार',
+            'swelling_of_stomach': 'पेट में सूजन', 'swelled_lymph_nodes': 'सूजी हुई लसीका ग्रंथियाँ',
+            'malaise': 'अस्वस्थता', 'blurred_and_distorted_vision': 'धुंधली और विकृत दृष्टि', 'phlegm': 'बलगम',
+            'throat_irritation': 'गले में जलन', 'redness_of_eyes': 'आँखों का लाल होना', 'sinus_pressure': 'साइनस दबाव',
+            'runny_nose': 'बहती नाक', 'congestion': 'जमाव', 'chest_pain': 'सीने में दर्द',
+            'weakness_in_limbs': 'हाथ-पैरों में कमजोरी', 'fast_heart_rate': 'तेज दिल की धड़कन',
+            'pain_during_bowel_movements': 'शौच के दौरान दर्द', 'pain_in_anal_region': 'गुदा क्षेत्र में दर्द',
+            'bloody_stool': 'खूनी मल', 'irritation_in_anus': 'गुदा में जलन', 'neck_pain': 'गर्दन का दर्द',
+            'dizziness': 'चक्कर आना', 'cramps': 'ऐंठन', 'bruising': 'चोट के निशान', 'obesity': 'मोटापा',
+            'swollen_legs': 'सूजे हुए पैर', 'swollen_blood_vessels': 'सूजी हुई रक्त वाहिकाएं',
+            'puffy_face_and_eyes': 'फूला हुआ चेहरा और आँखें', 'enlarged_thyroid': 'बढ़ी हुई थायरॉइड',
+            'brittle_nails': 'भंगुर नाखून', 'swollen_extremeties': 'सूजे हुए अंग', 'excessive_hunger': 'अत्यधिक भूख',
+            'extra_marital_contacts': 'विवाह बाह्य संपर्क',
+            'drying_and_tingling_lips': 'होंठों का सूखना और झुनझुनी', 'slurred_speech': 'अस्पष्ट बोली',
+            'knee_pain': 'घुटने का दर्द', 'hip_joint_pain': 'कूल्हे के जोड़ का दर्द', 'muscle_weakness': 'मांसपेशियों की कमजोरी',
+            'stiff_neck': 'कड़ी गर्दन', 'swelling_joints': 'सूजे हुए जोड़', 'movement_stiffness': 'गति में अकड़न',
+            'spinning_movements': 'चक्करदार गति', 'loss_of_balance': 'संतुलन खोना', 'unsteadiness': 'अस्थिरता',
+            'weakness_of_one_body_side': 'शरीर के एक तरफ कमजोरी', 'loss_of_smell': 'गंध का नुकसान',
+            'bladder_discomfort': 'मूत्राशय में बेचैनी', 'foul_smell_of urine': 'पेशाब की बदबू',
+            'continuous_feel_of_urine': 'पेशाब का लगातार महसूस होना', 'passage_of_gases': 'गैसों का निकलना',
+            'internal_itching': 'आंतरिक खुजली', 'toxic_look_(typhos)': 'विषाक्त रूप (टाइफस)',
+            'depression': 'अवसाद', 'irritability': 'चिड़चिड़ापन', 'muscle_pain': 'मांसपेशियों में दर्द',
+            'altered_sensorium': 'बदला हुआ संवेदी अवस्था', 'red_spots_over_body': 'शरीर पर लाल धब्बे',
+            'belly_pain': 'पेट दर्द', 'abnormal_menstruation': 'असामान्य मासिक धर्म',
+            'dischromic _patches': 'रंगहीन धब्बे', 'watering_from_eyes': 'आँखों से पानी आना',
+            'increased_appetite': 'बढ़ी हुई भूख', 'polyuria': 'पॉलीयूरिया (अधिक पेशाब)',
+            'family_history': 'पारिवारिक इतिहास', 'mucoid_sputum': 'श्लेष्मयुक्त थूक', 'rusty_sputum': 'जंग जैसा थूक',
+            'lack_of_concentration': 'एकाग्रता की कमी', 'visual_disturbances': 'दृश्य गड़बड़ी',
+            'receiving_blood_transfusion': 'रक्त आधान प्राप्त करना', 'receiving_unsterile_injections': 'असुरक्षित इंजेक्शन प्राप्त करना',
+            'coma': 'कोमा', 'stomach_bleeding': 'पेट से खून बहना', 'distention_of_abdomen': 'पेट का फूलना',
+            'history_of_alcohol_consumption': 'शराब पीने का इतिहास', 'fluid_overload.1': 'द्रव अतिभार (Duplicate)',
+            'blood_in_sputum': 'थूक में खून', 'prominent_veins_on_calf': 'पिंडली पर प्रमुख नसें',
+            'palpitations': 'धड़कन', 'painful_walking': 'दर्दनाक चलना', 'pus_filled_pimples': 'पस भरे दाने',
+            'blackheads': 'ब्लैकहेड्स', 'scurring': 'निशान', 'skin_peeling': 'त्वचा का छिलना',
+            'silver_like_dusting': 'चांदी जैसी धूल', 'small_dents_in_nails': 'नाखूनों में छोटे गड्ढे',
+            'inflammatory_nails': 'सूजन वाले नाखून', 'blister': 'छाला', 'red_sore_around_nose': 'नाक के चारों ओर लाल घाव',
+            'yellow_crust_ooze': 'पीली पपड़ी का रिसना'
+        };
+
+        // Create a reverse map for quick lookups (Hindi/English to Symptom Key)
+        const symptomReverseMap = {};
+        for (const english in symptomMap) {
+            const hindi = symptomMap[english];
+
+            // Map 1: English key (cleaned)
+            const cleanedEnglish = english.toLowerCase().replace(/_/g, ' ').trim();
+            symptomReverseMap[cleanedEnglish] = english;
+
+            // Map 2: Hindi value (exact) - Essential
+            const cleanedHindi = hindi.toLowerCase().trim();
+            symptomReverseMap[cleanedHindi] = english;
+
+            // Map 3: Specific common Hindi words/phrases for better matching (The Comprehensive Update)
+
+            // --- Pain / Aches ---
+            if (english.includes('pain') || english.includes('ache') || english.includes('cramps')) {
+                symptomReverseMap['दर्द'] = english;
+                symptomReverseMap['पीड़ा'] = english;
+                symptomReverseMap['तकलीफ'] = english;
+                symptomReverseMap['ऐंठन'] = english; // cramps
+                if (english.includes('stomach') || english.includes('abdominal') || english.includes('belly')) {
+                    symptomReverseMap['पेट में दर्द'] = english;
+                    symptomReverseMap['पेट दर्द हो रहा है'] = english;
+                }
+                if (english === 'headache') { symptomReverseMap['सर में दर्द'] = english; }
+                if (english === 'joint_pain') { symptomReverseMap['जोड़ों में दर्द'] = english; }
+                if (english === 'back_pain') { symptomReverseMap['कमर में दर्द'] = english; }
+                if (english === 'knee_pain') { symptomReverseMap['घुटने में दर्द'] = english; }
+                if (english === 'muscle_pain') { symptomReverseMap['मांसपेशियों में दर्द है'] = english; }
+            }
+
+            // --- Fever / Cold / Cough ---
+            if (english.includes('fever')) {
+                 symptomReverseMap['बुखार'] = english;
+                 symptomReverseMap['बुखार है'] = english;
+                 symptomReverseMap['तेज बुखार है'] = english;
+            }
+            if (english === 'chills') {
+                symptomReverseMap['ठंड'] = english;
+                symptomReverseMap['ठंड लग रही है'] = english;
+                symptomReverseMap['सर्दी'] = english;
+            }
+            if (english === 'shivering') { symptomReverseMap['कंपकपी हो रही है'] = english; }
+            if (english === 'cough') { symptomReverseMap['खांसी आ रही है'] = english; }
+            if (english === 'continuous_sneezing') {
+                symptomReverseMap['छींक'] = english;
+                symptomReverseMap['छींक आ रही है'] = english;
+            }
+            if (english === 'runny_nose') { symptomReverseMap['नाक बह रही है'] = english; }
+            if (english === 'congestion') { symptomReverseMap['जमाव महसूस हो रहा है'] = english; }
+
+            // --- Digestion / Nausea ---
+            if (english === 'vomiting') { symptomReverseMap['उल्टी हो रही है'] = english; }
+            if (english === 'nausea') {
+                symptomReverseMap['जी मिचला रहा है'] = english;
+                symptomReverseMap['उबकाई'] = english;
+            }
+            if (english === 'constipation') { symptomReverseMap['कब्ज है'] = english; }
+            if (english === 'diarrhoea') { symptomReverseMap['दस्त हो रहे हैं'] = english; }
+            if (english === 'loss_of_appetite') { symptomReverseMap['भूख नहीं लग रही है'] = english; }
+            if (english === 'acidity') { symptomReverseMap['एसिडिटी हो रही है'] = english; }
+            if (english === 'indigestion') { symptomReverseMap['अपच है'] = english; }
+
+            // --- Skin / Eyes ---
+            if (english === 'itching' || english === 'internal_itching') {
+                symptomReverseMap['खुजली हो रही है'] = english;
+                symptomReverseMap['खुजलाहट'] = english;
+            }
+            if (english === 'skin_rash') { symptomReverseMap['दाने'] = english; }
+            if (english === 'yellowish_skin') { symptomReverseMap['त्वचा पीली पड़ गई है'] = english; }
+            if (english === 'redness_of_eyes') { symptomReverseMap['आँखें लाल हैं'] = english; }
+            if (english === 'watering_from_eyes') { symptomReverseMap['आँखों से पानी आ रहा है'] = english; }
+
+            // --- Fatigue / Weakness / Dizziness ---
+            if (english === 'dizziness') {
+                symptomReverseMap['चक्कर'] = english;
+                symptomReverseMap['चक्कर आ रहा है'] = english;
+                symptomReverseMap['चक्कर आ रहे हैं'] = english;
+            }
+            if (english === 'fatigue') { symptomReverseMap['थकान महसूस हो रही है'] = english; }
+            if (english === 'lethargy') { symptomReverseMap['सुस्ती है'] = english; }
+            if (english === 'restlessness') { symptomReverseMap['बेचैनी हो रही है'] = english; }
+            if (english === 'muscle_weakness' || english === 'weakness_in_limbs') { symptomReverseMap['कमजोरी है'] = english; }
+
+            // --- Urinary / Bladder ---
+            if (english === 'burning_micturition') { symptomReverseMap['पेशाब में जलन हो रही है'] = english; }
+            if (english === 'continuous_feel_of_urine') { symptomReverseMap['बार बार पेशाब लग रहा है'] = english; }
+
+        }
+
+        const symptomCheckboxesDiv = document.getElementById('symptomCheckboxes');
+        const symptomsInput = document.getElementById('symptoms');
+        const submitSymptomsButton = document.getElementById('submitSymptoms');
+        const symptomModalElement = document.getElementById('symptomSelectModal');
+        const doctorsModalElement = document.getElementById('doctorsModal');
+        const micModalElement = document.getElementById('micModal');
+
+        // Doctor Suggestion elements
+        const suggestedExpert = document.getElementById('suggestedExpert');
+        const suggestionDetails = document.getElementById('suggestionDetails');
+
+        // Voice UI elements
+        const liveTranscription = document.getElementById('liveTranscription');
+        const transcriptionDiv = document.getElementById('transcription');
+        const bootstrapMicModal = new bootstrap.Modal(micModalElement);
+
+        // Doctor's Suggestion Logic (Unchanged)
+        const doctorMap = {
+            'Fungal infection': 'Dermatologist (त्वचा विशेषज्ञ)', 'Allergy': 'Allergist / General Physician (एलर्जी विशेषज्ञ / सामान्य चिकित्सक)',
+            'GERD': 'Gastroenterologist (गैस्ट्रोएंटेरोलॉजिस्ट)', 'Chronic cholestasis': 'Hepatologist / Gastroenterologist (हेपेटोलॉजिस्ट / गैस्ट्रोएंटेरोलॉजिस्ट)',
+            'Drug Reaction': 'General Physician (सामान्य चिकित्सक)', 'Peptic ulcer diseae': 'Gastroenterologist (गैस्ट्रोएंटेरोलॉजिस्ट)',
+            'AIDS': 'Immunologist / Infectious Disease Specialist (प्रतिरक्षाविज्ञानी / संक्रामक रोग विशेषज्ञ)', 'Diabetes ': 'Endocrinologist (एंडोक्रिनोलॉजिस्ट)',
+            'Gastroenteritis': 'General Physician (सामान्य चिकित्सक)', 'Bronchial Asthma': 'Pulmonologist (पल्मोनोलॉजिस्ट)',
+            'Hypertension ': 'Cardiologist (कार्डियोलॉजिस्ट) / General Physician', 'Migraine': 'Neurologist (न्यूरोलॉजिस्ट)',
+            'Cervical spondylosis': 'Orthopedic / Physiotherapist (हड्डी रोग विशेषज्ञ / फिजियोथेरेपिस्ट)', 'Paralysis (brain hemorrhage)': 'Neurologist / Neurosurgeon (न्यूरोलॉजिस्ट / न्यूरोसर्जन)',
+            'Jaundice': 'Hepatologist / General Physician (हेपेटोलॉजिस्ट / सामान्य चिकित्सक)', 'Malaria': 'General Physician (सामान्य चिकित्सक)',
+            'Chicken pox': 'General Physician (सामान्य चिकित्सक)', 'Dengue': 'General Physician (सामान्य चिकित्सक)',
+            'Typhoid': 'General Physician (सामान्य चिकित्सक)', 'hepatitis A': 'Hepatologist / General Physician (हेपेटोलॉजिस्ट / सामान्य चिकित्सक)',
+            'Hepatitis B': 'Hepatologist (हेपेटोलॉजिस्ट)', 'Hepatitis C': 'Hepatologist (हेपेटोलॉजिस्ट)',
+            'Hepatitis D': 'Hepatologist (हेपेटोलॉजिस्ट)', 'Hepatitis E': 'Hepatologist (हेपेटोलॉजिस्ट)',
+            'Alcoholic hepatitis': 'Hepatologist / Gastroenterologist (हेपेटोलॉजिस्ट / गैस्ट्रोएंटेरोलॉजिस्ट)', 'Tuberculosis': 'Pulmonologist (पल्मोनोलॉजिस्ट) / Infectious Disease Specialist',
+            'Common Cold': 'General Physician (सामान्य चिकित्सक)', 'Pneumonia': 'Pulmonologist (पल्मोनोलॉजिस्ट)',
+            'Dimorphic hemmorhoids(piles)': 'Proctologist / General Surgeon (प्रोक्टोलॉजिस्ट / सामान्य सर्जन)', 'Heart attack': 'Cardiologist (कार्डियोलॉजिस्ट)',
+            'Varicose veins': 'Vascular Surgeon (वैस्कुलर सर्जन)', 'Hypothyroidism': 'Endocrinologist (एंडोक्रिनोलॉजिस्ट)',
+            'Hyperthyroidism': 'Endocrinologist (एंडोक्रिनोलॉजिस्ट)', 'Hypoglycemia': 'Endocrinologist (एंडोक्रिनोलॉजिस्ट)',
+            'Osteoarthristis': 'Orthopedic (हड्डी रोग विशेषज्ञ)', 'Arthritis': 'Rheumatologist (रूमेटोलॉजिस्ट) / Orthopedic',
+            '(vertigo) Paroymsal  Positional Vertigo': 'ENT Specialist / Neurologist (ईएनटी विशेषज्ञ / न्यूरोलॉजिस्ट)',
+            'Acne': 'Dermatologist (त्वचा विशेषज्ञ)', 'Urinary tract infection': 'Urologist / General Physician (यूरोलॉजिस्ट / सामान्य चिकित्सक)',
+            'Psoriasis': 'Dermatologist (त्वचा विशेषज्ञ)', 'Impetigo': 'Dermatologist (त्वचा विशेषज्ञ)'
+        };
+
+        function getDoctorSuggestion(disease) {
+            const expert = doctorMap[disease] || 'General Physician (सामान्य चिकित्सक)';
+            let details = `इस बीमारी के लिए आपको **${expert}** से सलाह लेनी चाहिए।`;
+
+            if(expert.includes('Hepatologist') || expert.includes('Gastroenterologist')){
+                 details += ` ये डॉक्टर पाचन तंत्र, लीवर, पित्ताशय और अग्न्याशय से संबंधित समस्याओं का इलाज करते हैं।`;
+            } else if (expert.includes('Dermatologist')){
+                 details += ` ये डॉक्टर त्वचा, बाल और नाखून से संबंधित समस्याओं के विशेषज्ञ होते हैं।`;
+            } else if (expert.includes('Cardiologist')){
+                 details += ` ये डॉक्टर हृदय और रक्त वाहिकाओं से संबंधित समस्याओं का इलाज करते हैं।`;
+            } else if (expert.includes('Pulmonologist')){
+                 details += ` ये डॉक्टर फेफड़ों और श्वसन तंत्र से संबंधित समस्याओं का इलाज करते हैं।`;
+            } else if (expert.includes('Neurologist')){
+                 details += ` ये डॉक्टर मस्तिष्क, रीढ़ की हड्डी और तंत्रिका तंत्र से संबंधित समस्याओं का इलाज करते हैं।`;
+            } else if (expert.includes('Endocrinologist')){
+                 details += ` ये डॉक्टर हार्मोन और ग्रंथियों (जैसे थायरॉइड, मधुमेह) से संबंधित समस्याओं का इलाज करते हैं।`;
+            } else if (expert.includes('Orthopedic')){
+                 details += ` ये डॉक्टर हड्डियों, जोड़ों और मांसपेशियों से संबंधित समस्याओं का इलाज करते हैं।`;
+            }
+
+            return { expert: expert, details: details };
+        }
+
+        if (doctorsModalElement) {
+            doctorsModalElement.addEventListener('show.bs.modal', function () {
+                const disease = '{{ predicted_disease }}';
+
+                if (disease) {
+                    const suggestion = getDoctorSuggestion(disease);
+                    suggestedExpert.innerHTML = `Suggested Specialist: <br> <strong>${suggestion.expert}</strong>`;
+                    suggestionDetails.textContent = suggestion.details;
+                } else {
+                    suggestedExpert.textContent = 'कोई बीमारी अनुमानित नहीं है।';
+                    suggestionDetails.textContent = 'कृपया पहले लक्षण दर्ज करके बीमारी का अनुमान लगाएं।';
+                }
+            });
+        }
+
+        // Symptom Checkbox creation logic (Unchanged)
+        function createCheckboxes(currentSymptoms) {
+            symptomCheckboxesDiv.innerHTML = '';
+
+            for (const english in symptomMap) {
+                const hindi = symptomMap[english];
+                const isChecked = currentSymptoms.includes(english.trim());
+
+                const div = document.createElement('div');
+                div.className = 'form-check';
+
+                div.innerHTML = `
+                    <input class="form-check-input" type="checkbox" value="${english}" id="check_${english}" ${isChecked ? 'checked' : ''}>
+                    <label class="form-check-label" for="check_${english}">
+                        ${hindi} <span style="font-size: 0.8em; color: #555555;">(${english.replace(/_/g, ' ')})</span>
+                    </label>
+                `;
+                symptomCheckboxesDiv.appendChild(div);
+            }
+        }
+
+        if (symptomModalElement) {
+             symptomModalElement.addEventListener('show.bs.modal', function () {
+                const currentInputValue = symptomsInput.value.trim();
+                let currentSymptoms = [];
+                if (currentInputValue) {
+                    currentSymptoms = currentInputValue.split(',').map(s => s.trim()).filter(s => s);
+                }
+                createCheckboxes(currentSymptoms);
+             });
+        }
+
+        submitSymptomsButton.addEventListener('click', function() {
+            const checkedCheckboxes = symptomCheckboxesDiv.querySelectorAll('input[type="checkbox"]:checked');
+            const selectedEnglishSymptoms = [];
+
+            checkedCheckboxes.forEach(checkbox => {
+                const englishSymptom = checkbox.value;
+                selectedEnglishSymptoms.push(englishSymptom);
+            });
+
+            let existingSymptoms = symptomsInput.value.trim();
+            let finalSymptomsArray = [];
+
+            if (existingSymptoms) {
+                finalSymptomsArray = existingSymptoms.split(',').map(s => s.trim()).filter(s => s);
+            }
+
+            const uniqueSymptomsSet = new Set(finalSymptomsArray);
+            selectedEnglishSymptoms.forEach(symptom => {
+                uniqueSymptomsSet.add(symptom);
+            });
+
+            const finalSymptomsString = Array.from(uniqueSymptomsSet).join(', ');
+            symptomsInput.value = finalSymptomsString;
+        });
+
+
+        // =================================================================
+        // UPDATED: Speech Recognition Logic with IMPROVED Mapping
+        // =================================================================
+
+        function mapToValidSymptoms(spokenText) {
+            const normalizedText = spokenText.toLowerCase().trim();
+            const recognizedSymptoms = new Set();
+            let foundSymptomNames = [];
+
+            // Check for phrase matches (this is the key for natural language processing)
+            for (const spokenPhrase in symptomReverseMap) {
+                // Check if the spoken text CONTAINS the phrase/keyword
+                if (normalizedText.includes(spokenPhrase)) {
+                    const validSymptomKey = symptomReverseMap[spokenPhrase];
+                    recognizedSymptoms.add(validSymptomKey);
+                }
+            }
+
+            // Create display names from recognized system keys
+            recognizedSymptoms.forEach(key => {
+                foundSymptomNames.push(symptomMap[key] || key.replace(/_/g, ' '));
+            });
+
+            // Return unique system keys and their display names
+            return {
+                keys: Array.from(recognizedSymptoms),
+                display: Array.from(new Set(foundSymptomNames)).join(', ')
+            };
+        }
+
+
+        const startSpeechRecognitionButton = document.getElementById('startSpeechRecognition');
+
+        startSpeechRecognitionButton.addEventListener('click', startSpeechRecognition);
+
+        function stopRecognitionManually() {
+            if(recognition) {
+                recognition.stop();
+            }
+        }
+
+        function startSpeechRecognition() {
+            if (!('webkitSpeechRecognition' in window)) {
+                alert("Speech recognition is not supported in this browser. Please use Chrome.");
+                return;
+            }
+
+            // Hide old transcription and show modal
+            transcriptionDiv.textContent = '';
+            liveTranscription.textContent = 'सुन रहा हूँ... (Listening...)';
+            bootstrapMicModal.show();
+
+
+            recognition = new webkitSpeechRecognition();
+            recognition.lang = 'hi-IN'; // Set to Hindi for better Hindi/Hinglish recognition
+            recognition.interimResults = true;
+
+            recognition.onstart = function () {
+                liveTranscription.textContent = 'बोलना शुरू करें...';
+            };
+
+            recognition.onresult = function (event) {
+                let interimTranscript = '';
+                let finalTranscript = '';
+
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        finalTranscript += event.results[i][0].transcript;
+                    } else {
+                        interimTranscript += event.results[i][0].transcript;
+                    }
+                }
+
+                // Show live transcription in the modal
+                liveTranscription.textContent = interimTranscript || finalTranscript;
+
+                if (finalTranscript) {
+                    const mappingResult = mapToValidSymptoms(finalTranscript);
+
+                    const systemSymptoms = mappingResult.keys.join(', ');
+                    const readableSymptoms = mappingResult.display;
+
+                    // Display the mapped symptoms to the user
+                    if (systemSymptoms) {
+                        transcriptionDiv.innerHTML = `✅ **Recognized Symptoms (System Keys):** ${systemSymptoms} <br> 🗣️ **Translated/Mapped Symptoms (User View):** ${readableSymptoms}`;
+                    } else {
+                        transcriptionDiv.textContent = `❌ Recognized Text: "${finalTranscript}". No matching symptoms found in the system database.`;
+                    }
+
+                    // Add result to symptoms input box (Only add valid keys)
+                    if (systemSymptoms) {
+                        let existingSymptoms = symptomsInput.value.trim();
+                        let finalSymptomsSet = new Set();
+
+                        // Add existing symptoms
+                        if (existingSymptoms) {
+                            existingSymptoms.split(',').map(s => s.trim()).filter(s => s).forEach(s => finalSymptomsSet.add(s));
+                        }
+
+                        // Add new mapped symptoms
+                        mappingResult.keys.forEach(key => finalSymptomsSet.add(key));
+
+                        // Update the input field
+                        symptomsInput.value = Array.from(finalSymptomsSet).join(', ');
+                    }
+                }
+            };
+
+            recognition.onerror = function (event) {
+                console.error('Speech recognition error:', event.error);
+                liveTranscription.textContent = `🎙️ Error: ${event.error}. कृपया पुन: प्रयास करें।`;
+                bootstrapMicModal.hide();
+            };
+
+            recognition.onend = function () {
+                console.log('Speech recognition ended.');
+                bootstrapMicModal.hide();
+            };
+
+            recognition.start();
+        }
+    </script>
+</body>
+</html>

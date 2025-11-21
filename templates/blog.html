@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog Post | Medical Health Care</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+
+    <style>
+      body {
+        background-color: #0d0d0d;
+        color: #f5f5f5;
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.8;
+        scroll-behavior: smooth;
+      }
+
+
+      /* ===== Sticky Navbar ===== */
+      .navbar {
+        background: rgba(18,18,18,0.9);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 10px rgba(255,0,0,0.3);
+      }
+
+      .btn-home {
+        background-color: #ff2e2e;
+        color: #fff;
+        border: none;
+        border-radius: 30px;
+        padding: 8px 20px;
+        font-weight: 600;
+        transition: 0.3s;
+        text-decoration: none;
+      }
+
+      .btn-home:hover {
+        background-color: #fff;
+        color: #ff2e2e;
+        transform: scale(1.05);
+      }
+
+      /* ===== Blog ===== */
+      .blog-container {
+        background-color: #121212;
+        border-radius: 15px;
+        padding: 40px 50px;
+        margin: 80px auto 60px;
+        box-shadow: 0 4px 20px rgba(255, 0, 0, 0.2);
+        animation: fadeIn 1s ease;
+      }
+
+      h2, h3 {
+        color: #ff2e2e;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+      }
+
+      h3::after, h2::after {
+        content: "";
+        display: block;
+        width: 80px;
+        height: 3px;
+        background-color: #ff2e2e;
+        margin-top: 8px;
+        border-radius: 2px;
+        box-shadow: 0 0 10px #ff2e2e;
+      }
+
+      p, li {
+        color: #e0e0e0;
+        font-size: 1.05rem;
+      }
+
+      strong { color: #ff2e2e; }
+
+      /* ===== Reading Progress Bar ===== */
+      #progressBar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 5px;
+        background-color: #ff2e2e;
+        z-index: 1000;
+        transition: width 0.25s ease;
+        box-shadow: 0 0 10px #ff2e2e;
+      }
+
+      /* ===== Social Icons ===== */
+      .social-icons a {
+        color: #ff2e2e;
+        font-size: 1.5rem;
+        margin: 0 10px;
+        transition: 0.3s;
+      }
+
+      .social-icons a:hover {
+        color: #fff;
+        text-shadow: 0 0 10px #ff2e2e;
+      }
+
+      /* ===== Author Card ===== */
+      .author-card {
+        background-color: #1a1a1a;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 40px;
+        text-align: center;
+        box-shadow: 0 0 15px rgba(255,0,0,0.2);
+      }
+
+      .author-img {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        border: 3px solid #ff2e2e;
+        object-fit: cover;
+        margin-bottom: 10px;
+      }
+
+      #scrollTopBtn {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        z-index: 99;
+        background-color: #ff2e2e;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        padding: 12px 15px;
+        font-size: 18px;
+        display: none;
+        transition: 0.3s;
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+      }
+
+
+      #scrollTopBtn:hover {
+        background-color: #fff;
+        color: #ff2e2e;
+        transform: scale(1.1);
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @media (max-width: 768px) {
+        .blog-container { padding: 25px 20px; }
+      }
+
+        .author-card {
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  padding: 25px 20px;
+  margin-top: 40px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+  transition: 0.3s ease;
+}
+
+.author-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(255, 0, 0, 0.35);
+}
+
+.author-img {
+  width: 90px;                /* fixed size */
+  height: 90px;
+  border-radius: 50%;         /* circular shape */
+  border: 3px solid #ff2e2e;  /* red border */
+  object-fit: cover;          /* prevent stretching */
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.3);
+  transition: 0.3s ease;
+}
+
+.author-img:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+}
+
+
+    </style>
+  </head>
+
+  <body>
+    <!-- Progress Bar -->
+    <div id="progressBar"></div>
+
+    <!-- Sticky Navbar -->
+    <nav class="navbar navbar-dark fixed-top px-3">
+      <a href="{{ url_for('index') }}" class="btn-home">🏠 Go to Home Page</a>
+      <span class="navbar-text ms-auto text-danger fw-bold">🩺 Welcome to my Blogs</span>
+        <span class="navbar-text ms-auto text-danger fw-bold">🩺 Medical Health Care</span>
+    </nav>
+
+    <!-- Blog Section -->
+    <div class="container">
+      <div class="blog-container">
+        <h2 class="text-center mb-4">Building a Symptom-Based Disease Diagnosis Web App</h2>
+        <p>In the era of rapid technological advancements, healthcare accessibility has become essential. We built a symptom-based disease diagnosis web app powered by <strong>Flask</strong> and <strong>Machine Learning</strong> to help users identify possible diseases based on their symptoms.</p>
+
+        <h3 class="mt-5">The Problem</h3>
+        <p>People often experience symptoms but lack clarity about what they might mean. Since many diseases share similar symptoms, it’s difficult for users to identify their health conditions quickly. Our idea was to create an intelligent system that gives instant, data-backed insights.</p>
+
+        <h3 class="mt-5">The Solution</h3>
+        <p>We developed a platform that allows users to enter their symptoms and get disease predictions instantly using an AI model trained on healthcare datasets.</p>
+        <ol>
+          <li><strong>Symptom Input:</strong> Users can enter symptoms through a sleek, minimal input form.</li>
+          <li><strong>Machine Learning Model:</strong> A <em>Decision Tree Classifier</em> trained on medical data predicts the disease.</li>
+          <li><strong>Prediction:</strong> The system returns accurate possible diagnoses instantly.</li>
+          <li><strong>Extra Insights:</strong> The app suggests precautions, medications, diet, and workout tips.</li>
+        </ol>
+
+        <h3 class="mt-5">Key Features</h3>
+        <ul>
+          <li><strong>User-Friendly Interface:</strong> Modern UI for seamless interaction.</li>
+          <li><strong>Accurate Predictions:</strong> Reliable machine learning-based results.</li>
+          <li><strong>Comprehensive Health Info:</strong> Includes medication, diet, and precautions.</li>
+          <li><strong>Educational Blogs:</strong> Provides additional learning content about diseases and health.</li>
+        </ul>
+
+        <h3 class="mt-5">Conclusion</h3>
+        <p>Our <strong>Symptom-Based Disease Diagnosis Web App</strong> represents the fusion of AI and healthcare. It empowers users to make informed decisions about their health.</p>
+
+        <!-- Social Share -->
+        <div class="text-center mt-5">
+          <h5>Share this article:</h5>
+          <div class="social-icons">
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-twitter"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <!-- Author Info -->
+        <div class="author-card mt-5 text-center">
+  <img src="{{ url_for('static', filename='img.png') }}"
+       alt="My Photo"
+       class="author-img">
+
+  <h5 class="text-danger mt-3 mb-1">Medical Health Care</h5>
+           <a href="https://www.ajimullahansari.com" target="_blank"
+   style="display:inline-block; padding:6px 16px; background:brown; color:white;
+   border-radius:6px; text-decoration:none; line-height:1.2;">
+   Visit My Website
+</a>
+
+  <p class="mb-0 text-light small">
+    A passionate team of developers and healthcare enthusiasts bringing innovation to medical technology.
+  </p>
+</div>
+
+      </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button onclick="scrollToTop()" id="scrollTopBtn" title="Go to top">⬆</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // Scroll to Top Button
+      const scrollTopBtn = document.getElementById("scrollTopBtn");
+      window.onscroll = function() {
+        // Show/Hide scrollTop button
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+          scrollTopBtn.style.display = "block";
+        } else {
+          scrollTopBtn.style.display = "none";
+        }
+
+        // Progress bar width
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const progress = (scrollTop / scrollHeight) * 100;
+        document.getElementById("progressBar").style.width = progress + "%";
+      };
+
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    </script>
+  </body>
+</html>

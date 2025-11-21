@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About Us | Medical Health Center</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+
+    <style>
+      body {
+        background-color: #111;
+        color: #f8f9fa;
+        font-family: 'Poppins', sans-serif;
+        scroll-behavior: smooth;
+      }
+
+      h3 {
+        color: #e63946;
+        margin-top: 30px;
+        font-weight: 600;
+      }
+
+      p {
+        color: #ddd;
+        line-height: 1.7;
+      }
+
+      /* Hero Section */
+      .hero-section {
+        background: linear-gradient(135deg, #000000 0%, #e63946 100%);
+        color: #fff;
+        text-align: center;
+        padding: 90px 20px;
+        border-radius: 15px;
+        margin-bottom: 50px;
+        animation: fadeInDown 1.2s ease;
+        box-shadow: 0 4px 25px rgba(230, 57, 70, 0.3);
+      }
+
+      .hero-section h1 {
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: white;
+      }
+
+      .btn-home {
+        background-color: white;
+        color: #e63946;
+        font-weight: 600;
+        padding: 12px 28px;
+        border-radius: 30px;
+        border: 2px solid white;
+        box-shadow: 0 3px 12px rgba(255,255,255,0.2);
+        transition: all 0.4s ease;
+      }
+
+      .btn-home:hover {
+        background-color: #e63946;
+        color: white;
+        border-color: #e63946;
+        transform: scale(1.08);
+      }
+
+      /* Content Section */
+      .content-section {
+        background-color: #1a1a1a;
+        border-radius: 15px;
+        padding: 40px;
+        margin-top: 40px;
+        box-shadow: 0 4px 20px rgba(255,255,255,0.05);
+        animation: fadeInUp 1s ease;
+      }
+
+      /* Team Section */
+      .team-section {
+        background-color: #1a1a1a;
+        border-radius: 15px;
+        padding: 40px;
+        margin-top: 50px;
+        box-shadow: 0px 4px 15px rgba(255,255,255,0.1);
+        animation: fadeIn 1.2s ease;
+      }
+
+      .team-card {
+        border: none;
+        transition: all 0.3s ease;
+        background: #111;
+        border-radius: 20px;
+        padding: 25px;
+      }
+
+      .team-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 20px rgba(230, 57, 70, 0.3);
+      }
+
+      .team-card img {
+        border-radius: 50%;
+        width: 130px;
+        height: 130px;
+        object-fit: cover;
+        margin: 0 auto 15px;
+        border: 3px solid #e63946;
+      }
+
+      .team-card h5 {
+        color: #e63946;
+        font-weight: 600;
+      }
+
+      .text-muted {
+        color: #aaa !important;
+      }
+
+      /* Scroll To Top */
+      #scrollTopBtn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 99;
+        border: none;
+        outline: none;
+        background-color: #e63946;
+        color: white;
+        cursor: pointer;
+        padding: 12px;
+        border-radius: 50%;
+        font-size: 18px;
+        display: none;
+        transition: 0.4s;
+      }
+
+      #scrollTopBtn:hover {
+        background-color: white;
+        color: #e63946;
+        transform: scale(1.1);
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-40px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container my-5">
+
+      <!-- Hero Section -->
+      <div class="hero-section shadow-lg">
+        <h1 class="display-5 fw-bold">Welcome to Medical Health Care</h1>
+        <p class="lead mt-3">
+          Where health meets technology for a brighter, healthier future.
+        </p>
+        <a href="{{ url_for('index') }}" class="btn-home mt-4">🏠 Go to Home Page</a>
+      </div>
+
+      <!-- About Content -->
+      <div class="content-section">
+        <h3>Our Vision</h3>
+        <p>We envision a world where access to healthcare information is a fundamental right...</p>
+
+        <h3>Who We Are</h3>
+        <p>We are a passionate team of healthcare professionals, data scientists, and ML technology enthusiasts...</p>
+
+        <h3>Our Mission</h3>
+        <p>Our mission is to provide an intuitive platform powered by artificial intelligence...</p>
+
+        <h3>How We Do It</h3>
+        <p>Our system uses a robust ML model trained on large datasets of symptoms and diseases...</p>
+
+        <h3>Your Well-being, Our Priority</h3>
+        <p>We go beyond predictions by providing comprehensive disease details...</p>
+
+        <h3>Join Us on This Journey</h3>
+        <p>Explore, engage, and take control of your health...</p>
+
+        <p><strong>Thank you for choosing <em>Medical Health Center</em></strong></p>
+      </div>
+
+      <!-- Team Section -->
+      <div class="team-section text-center mt-5">
+        <h3 class="mb-4">Meet Our Team</h3>
+        <div class="row justify-content-center">
+          <div class="col-md-3 mb-4">
+            <div class="card team-card">
+              <img src="{{ url_for('static', filename='ajim new photo.png') }}" alt="My Photo" class="img-fluid rounded-circle">
+
+              <h5>Ajimullah Ansari</h5>
+              <p class="text-muted">Team Leader | Django Developer | AI/ML Engineer</p>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="card team-card">
+              <img src="{{ url_for('static', filename='humaira.jpeg') }}" alt="My Photo" class="img-fluid rounded-circle">
+
+              <h5>Humaira hasan Khan</h5>
+              <p class="text-muted">Frontend Developer</p>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="card team-card">
+              <img src="{{ url_for('static', filename='muskan.jpeg') }}" alt="My Photo" class="img-fluid rounded-circle">
+
+              <h5>Muskan Khatoon </h5>
+              <p class="text-muted">Frontend Developer</p>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="card team-card">
+              <img src="{{ url_for('static', filename='aparna.jpg') }}" alt="My Photo" class="img-fluid rounded-circle">
+
+              <h5>Aparna Giri</h5>
+              <p class="text-muted">Python Expert</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll To Top Button -->
+    <button onclick="scrollToTop()" id="scrollTopBtn" title="Go to top">⬆</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      const scrollTopBtn = document.getElementById("scrollTopBtn");
+      window.onscroll = function() {
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+          scrollTopBtn.style.display = "block";
+        } else {
+          scrollTopBtn.style.display = "none";
+        }
+      };
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    </script>
+  </body>
+</html>

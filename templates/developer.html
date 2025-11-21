@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Developer | Ajimullah Ansari</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+
+    <style>
+      body {
+        background-color: #0d0d0d;
+        color: #f5f5f5;
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.8;
+      }
+
+      /* ===== Header ===== */
+      .page-header {
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: 40px;
+        position: relative;
+      }
+
+      .page-header h2 {
+        color: #ff2e2e;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .page-header h2::after {
+        content: "";
+        display: block;
+        width: 100px;
+        height: 3px;
+        background: #ff2e2e;
+        margin: 10px auto 0;
+        border-radius: 3px;
+        box-shadow: 0 0 10px #ff2e2e;
+      }
+
+      /* ===== Developer Card ===== */
+      .dev-card {
+        background-color: #151515;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 4px 20px rgba(255, 0, 0, 0.2);
+        transition: all 0.3s ease-in-out;
+      }
+
+      .dev-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 25px rgba(255, 0, 0, 0.4);
+      }
+
+      .dev-img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 3px solid #ff2e2e;
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+        transition: 0.4s;
+      }
+
+      .dev-img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 25px rgba(255, 0, 0, 0.7);
+      }
+
+      .dev-name {
+        color: #ff2e2e;
+        font-weight: 700;
+        margin-top: 20px;
+      }
+
+      .dev-role {
+        color: #fff;
+        font-size: 1.1rem;
+      }
+
+      /* ===== Section Headings ===== */
+      h5 {
+        color: #ff2e2e;
+        font-weight: 600;
+        margin-top: 25px;
+      }
+
+      p {
+        color: #ddd;
+      }
+
+      /* ===== Expertise Badges ===== */
+      .expertise span {
+        display: inline-block;
+        background-color: #ff2e2e;
+        color: #fff;
+        border-radius: 25px;
+        padding: 8px 16px;
+        margin: 5px;
+        font-weight: 500;
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+        transition: 0.3s;
+      }
+
+      .expertise span:hover {
+        background-color: #fff;
+        color: #ff2e2e;
+        transform: scale(1.05);
+      }
+
+      /* ===== Buttons ===== */
+      .btn-custom {
+        background-color: #ff2e2e;
+        border: none;
+        color: #fff;
+        border-radius: 30px;
+        padding: 10px 25px;
+        text-decoration: none;
+        transition: 0.3s;
+        margin: 10px;
+      }
+
+      .btn-custom:hover {
+        background-color: #fff;
+        color: #ff2e2e;
+        transform: scale(1.05);
+        box-shadow: 0 0 15px #ff2e2e;
+      }
+
+      /* ===== Social Icons ===== */
+      .social-icons a {
+        color: #ff2e2e;
+        font-size: 1.6rem;
+        margin: 0 10px;
+        transition: 0.3s;
+      }
+
+      .social-icons a:hover {
+        color: #fff;
+        text-shadow: 0 0 15px #ff2e2e;
+      }
+
+      /* ===== Quote ===== */
+      .quote {
+        font-style: italic;
+        color: #ccc;
+        margin-top: 40px;
+        border-left: 3px solid #ff2e2e;
+        padding-left: 15px;
+      }
+
+      @media (max-width: 768px) {
+        .btn-custom {
+          display: block;
+          width: 80%;
+          margin: 10px auto;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+
+      <div class="page-header">
+        <h2>Meet the Developer</h2>
+        <div class="text-center mt-3">
+            <a href="{{ url_for('index') }}" class="btn-custom"><i class="bi bi-house-door"></i> Go to Home</a>
+          <a href="https://www.ajimullahansari.com" target="_blank" class="btn-custom"><i class="bi bi-globe2"></i> Visit My Website</a>
+        </div>
+      </div>
+
+      <div class="dev-card text-center">
+        <img src="{{ url_for('static', filename='img.png') }}" alt="Ajimullah Ansari" class="dev-img">
+
+        <h3 class="dev-name">Ajimullah Ansari</h3>
+        <p class="dev-role">AI & ML Engineer | Web Developer | Innovator</p>
+
+        <div class="expertise my-4">
+          <span>Artificial Intelligence</span>
+          <span>Machine Learning</span>
+          <span>Python Development</span>
+          <span>Flask</span>
+          <span>Deep Learning</span>
+          <span>Web Design</span>
+        </div>
+
+        <p>Hello, I'm <b>Ajimullah Ansari</b>, an AI and Machine Learning Engineer with a passion for innovation and creating meaningful digital solutions.
+        My mission is to blend intelligence with impact, building tools that make life smarter and better.</p>
+
+        <h5>My Expertise</h5>
+        <p>With a foundation in Computer Science, I’ve worked on multiple AI-based projects including predictive healthcare models, data-driven dashboards, and automation tools.</p>
+
+        <h5>Passion for Health Tech</h5>
+        <p>The development of <b><a href="https://www.ajimullahansari.com" target="_blank" style="color:#ff2e2e;text-decoration:none;">www.ajimullahansari.com</a></b>
+        reflects my dedication to using AI for accessible and intelligent healthcare solutions.</p>
+
+        <h5>Connect with Me</h5>
+        <div class="social-icons mt-3">
+          <a href="#"><i class="bi bi-linkedin"></i></a>
+          <a href="#"><i class="bi bi-github"></i></a>
+          <a href="#"><i class="bi bi-envelope-fill"></i></a>
+        </div>
+
+        <div class="quote mt-4">
+          “Empowering healthcare with intelligence and innovation.”
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
