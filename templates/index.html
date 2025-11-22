@@ -127,14 +127,14 @@
                         👋 स्वागत है, **{{ current_user.username }}**!
                     </span>
                     <a class="btn btn-outline-danger" href="{{ url_for('logout') }}">
-                        <i class="bi bi-box-arrow-right"></i> लॉगआउट
+                        <i class="bi bi-box-arrow-right"></i> लॉगआउट(Logout)
                     </a>
                 {% else %}
                     <a class="btn btn-outline-light me-2" href="{{ url_for('login') }}">
-                        🔑 लॉगिन
+                        🔑 लॉगिन(Login)
                     </a>
                     <a class="btn btn-outline-warning" href="{{ url_for('signup') }}">
-                        ➕ साइन अप
+                        ➕ साइन अप(SignUp)
                     </a>
                 {% endif %}
             </div>
@@ -185,13 +185,13 @@
             <div class="row mb-3">
     <div class="col-md-12 text-center">
         <a href="/" class="btn btn-warning btn-lg">
-            🆕 नए लक्षणों के लिए पेज साफ़ करें (Refresh The Page...)
+            🆕नए लक्षणों के लिए पेज साफ़ करें (Refresh The Page for new symptoms...)
         </a>
     </div>
 </div>
             <label for="symptoms">लक्षण चुनें (Select Symptoms):</label>
             <input type="text" class="form-control" id="symptoms" name="symptoms"
-                   placeholder="लक्षण मैन्युअल रूप से टाइप करें, या नीचे दी गई सूची से चुनें। (Type symptoms manually, or select from the list below.)"
+                   placeholder="लक्षण मैन्युअल रूप से टाइप करें, या नीचे दी गई सूची से चुनें। <br>(Type symptoms manually, or select from the list below...)"
                    style="color: #ffffff;">
 
             <button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#symptomSelectModal">
@@ -247,8 +247,8 @@
                 <p>लक्षणों को लोड किया जा रहा है...</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">बंद करें</button>
-                <button type="button" class="btn btn-primary" id="submitSymptoms" data-bs-dismiss="modal">सिम्प्टम भरें और बंद करें</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">बंद करें(Close)</button>
+                <button type="button" class="btn btn-primary" id="submitSymptoms" data-bs-dismiss="modal">सिम्प्टम भरें और बंद करें(Select the Symptoms and close..)</button>
             </div>
         </div>
     </div>
@@ -293,7 +293,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-info text-white">
-                <h5 class="modal-title" id="doctorsModalLabel">👨‍⚕️ Doctor's Suggestion</h5>
+                <h5 class="modal-title" id="doctorsModalLabel">👨‍⚕️Doctor's Suggestion</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -810,4 +810,5 @@
         }
     </script>
 </body>
+
 </html>
